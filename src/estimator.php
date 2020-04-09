@@ -31,9 +31,30 @@ class SevereImpact{
   public $casesForVentilatorsByRequestedTime;
   public $dollarsInFlight;
 }
+class Output{
+  public $data;
+  public $impact;
+  public $severeImpact;
+}
+
 $data= new Input();
 $impact=new Impact();
 $severeImpact=new SevereImpact();
+
+function periodType($data)
+{
+  switch ($data->periodType) {
+    case "days":
+        return $data->timeToElapse;
+    break;
+    case "weeks":
+        return intdiv($data->timeToElapse, 7);
+    break;
+    case "months":
+        return intdiv($data->timeToElapse, 30);
+    break;
+}
+}
 
 function covid19ImpactEstimator($data)
 {
@@ -41,9 +62,9 @@ function covid19ImpactEstimator($data)
 
   $severeImpact->currentlyInfected=$data->reportedCases*50;
 
-  $impact->infectionsByRequestedTime=$impact->currentlyInfected*pow(2,9);
+  $impact->infectionsByRequestedTime=$impact->currentlyInfected*pow(2,periodType($data));
 
-  $severeImpact->infectionsByRequestedTime=$severeImpact->currentlyInfected*pow(2,9);
+  $severeImpact->infectionsByRequestedTime=$severeImpact->currentlyInfected*pow(2,periodType($data));
 
   $impact->severeCasesByRequestedTime=$impact->infectionsByRequestedTime*0.15;
 
@@ -56,17 +77,24 @@ function covid19ImpactEstimator($data)
   $severeImpact->casesForVentilatorsByRequestedTime=$impact->infectionsByRequestedTime*0.02;
 
   $impact->dollarsInFlight=$impact->infectionsByRequestedTime*0.65*1.5*30;
-  $severeImpact->dollarsInFlight=$impact->infectionsByRequestedTime*0.65*1.5*30;
+  $severeImpact->dollarsInFlight=$severeImpact->infectionsByRequestedTime*0.65*1.5*30;
 
-  // echo "$impact->currentlyInfected <br>";
-  // echo "$severeImpact->currentlyInfected <br>";
-  // echo "$impact->severeCasesByRequestedTime <br>";
-  // echo "$severeImpact->severeCasesByRequestedTime <br>";
-  // echo "$impact->hospitalBedsByRequestedTime <br>";
-  // echo "$impact->dollarsInFlight <br>";
-  return $data;
-  return $impact;
-  return $severeImpact;
+  $newoutput= new Output();
+  $newoutput->data=$data;
+  $newoutput->impact=$impact;
+  $newoutput->severeImpact=$severeImpact;
+  // die(var_dump($newoutput->severeImpact->currentlyInfected));
+
+
+  // echo $newoutput->impact->currentlyInfected ;
+  // echo "$newoutput->severeImpact->currentlyInfected";
+  // echo "$newoutput->impact->severeCasesByRequestedTime <br>";
+  // echo "$newoutput->severeImpact->severeCasesByRequestedTime <br>";
+  // echo "$newoutput->impact->hospitalBedsByRequestedTime <br>";
+  // echo "$newoutput->impact->dollarsInFlight <br>";
+  return $newoutput;
 }
+
 covid19ImpactEstimator($data);
+// echo "$newoutput->impact->currentlyInfected <br>";
 ?>
