@@ -47,7 +47,7 @@ function covid19ImpactEstimator($data)
   $impact["dollarsInFlight"]=$impact["infectionsByRequestedTime"]*0.65*1.5*30;
   $severeImpact["dollarsInFlight"]=($severeImpact["infectionsByRequestedTime"]*0.65*1.5*30);
 
-  $output= array($data,$impact,$severeImpact);
+  $output= array("data"=>$data,"impact"=>$impact,"severeImpact"=>$severeImpact);
  
   
 
