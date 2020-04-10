@@ -45,13 +45,13 @@ function periodType($data)
 {
   switch ($data->periodType) {
     case "days":
-        return $data->timeToElapse;
+        return intdiv($data->timeToElapse,3);
     break;
     case "weeks":
-        return intdiv($data->timeToElapse, 7);
+        return intdiv($data->timeToElapse, 3)*7;
     break;
     case "months":
-        return intdiv($data->timeToElapse, 30);
+        return intdiv($data->timeToElapse, 3)*30;
     break;
 }
 }
@@ -62,15 +62,15 @@ function covid19ImpactEstimator($data)
 
   $severeImpact->currentlyInfected=$data->reportedCases*50;
 
-  $impact->infectionsByRequestedTime=$impact->currentlyInfected*pow(2,periodType($data));
-
+  $impact->infectionsByRequestedTime=$impact->currentlyInfected * (pow(2,periodType($data)));
+  // die(var_dump(periodType($data)));
   $severeImpact->infectionsByRequestedTime=$severeImpact->currentlyInfected*pow(2,periodType($data));
 
   $impact->severeCasesByRequestedTime=$impact->infectionsByRequestedTime*0.15;
 
   $severeImpact->severeCasesByRequestedTime=$severeImpact->infectionsByRequestedTime*0.15;
-  $impact->hospitalBedsByRequestedTime=$data->totalHospitalBeds*0.35;
-  $severeImpact->hospitalBedsByRequestedTime=$data->totalHospitalBeds*0.35;
+  $impact->hospitalBedsByRequestedTime=intval(($data->totalHospitalBeds*0.35)-$impact->severeCasesByRequestedTime);
+  $severeImpact->hospitalBedsByRequestedTime=intval(($data->totalHospitalBeds*0.35)-$severeImpact->severeCasesByRequestedTime);
   $impact->casesForICUByRequestedTime=$impact->infectionsByRequestedTime*0.05;
   $severeImpact->casesForICUByRequestedTime=$impact->infectionsByRequestedTime*0.05;
   $impact->casesForVentilatorsByRequestedTime=$impact->infectionsByRequestedTime*0.02;
@@ -86,12 +86,14 @@ function covid19ImpactEstimator($data)
   // die(var_dump($newoutput->severeImpact->currentlyInfected));
 
 
-  // echo $newoutput->impact->currentlyInfected ;
-  // echo "$newoutput->severeImpact->currentlyInfected";
-  // echo "$newoutput->impact->severeCasesByRequestedTime <br>";
-  // echo "$newoutput->severeImpact->severeCasesByRequestedTime <br>";
-  // echo "$newoutput->impact->hospitalBedsByRequestedTime <br>";
-  // echo "$newoutput->impact->dollarsInFlight <br>";
+  echo $newoutput->impact->currentlyInfected . "<br>" ;
+  echo $newoutput->severeImpact->currentlyInfected. "<br>";
+  echo $newoutput->impact->infectionsByRequestedTime . "<br>" ;
+  echo $newoutput->severeImpact->infectionsByRequestedTime. "<br>";
+  echo $newoutput->impact->severeCasesByRequestedTime . "<br>";
+  echo $newoutput->severeImpact->severeCasesByRequestedTime ."<br>";
+  echo $newoutput->impact->hospitalBedsByRequestedTime ."<br>";
+  echo $newoutput->impact->dollarsInFlight . "<br>";
   return $newoutput;
 }
 
