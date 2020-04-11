@@ -52,7 +52,7 @@ function covid19ImpactEstimator($data)
   
 
 
-  die(var_dump($output));
+  // die(var_dump($output));
   return $output;
  
 
