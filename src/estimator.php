@@ -34,9 +34,9 @@ function covid19ImpactEstimator($data)
   ;
   $severeImpact["infectionsByRequestedTime"]=$severeImpact["currentlyInfected"]*pow(2,periodType($data));
 
-  $impact["severeCasesByRequestedTime"]=$impact["infectionsByRequestedTime"]*0.15;
+  $impact["severeCasesByRequestedTime"]=($impact["currentlyInfected"] * (pow(2,periodType($data))))*0.15;
 
-  $severeImpact["severeCasesByRequestedTime"]=$severeImpact["infectionsByRequestedTime"]*0.15;
+  $severeImpact["severeCasesByRequestedTime"]=($severeImpact["currentlyInfected"]*pow(2,periodType($data)))*0.15;
   $impact["hospitalBedsByRequestedTime"]=intval(($data["totalHospitalBeds"]*0.35)-$impact["severeCasesByRequestedTime"]);
   $severeImpact["hospitalBedsByRequestedTime"]=intval(($data["totalHospitalBeds"]*0.35)-$severeImpact["severeCasesByRequestedTime"]);
   $impact["casesForICUByRequestedTime"]=$impact["infectionsByRequestedTime"]*0.05;
@@ -52,7 +52,7 @@ function covid19ImpactEstimator($data)
   
 
 
-  // die(var_dump($output));
+  die(var_dump($output));
   return $output;
  
 
