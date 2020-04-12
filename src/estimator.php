@@ -47,7 +47,7 @@ $factor2=50;
   $impact["casesForICUByRequestedTime"]=$impact["infectionsByRequestedTime"]*0.05;
   $severeImpact["casesForICUByRequestedTime"]=$severeImpact["infectionsByRequestedTime"]*0.05;
   $impact["casesForVentilatorsByRequestedTime"]=intval($impact["infectionsByRequestedTime"]*0.02);
-  $severeImpact["casesForVentilatorsByRequestedTime"]=intval($impact["infectionsByRequestedTime"]*0.02);
+  $severeImpact["casesForVentilatorsByRequestedTime"]=intval($severeImpact["infectionsByRequestedTime"]*0.02);
 
   $impact["dollarsInFlight"]=$impact["infectionsByRequestedTime"]*0.65*1.5*30;
   $severeImpact["dollarsInFlight"]=($severeImpact["infectionsByRequestedTime"]*0.65*1.5*30);
