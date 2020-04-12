@@ -58,7 +58,7 @@ $factor2=50;
 
 
   // die(var_dump($output,periodType($data)));
-  return $output;
+   return $output;
  
 
 }
