@@ -51,7 +51,7 @@ $factor2=50;
   $severeImpact["currentlyInfected"]=$data["reportedCases"]*$factor2;
 
   $impact["infectionsByRequestedTime"]=$impact["currentlyInfected"] * (pow(2,periodType($data)));
-  ;
+  
   $severeImpact["infectionsByRequestedTime"]=$severeImpact["currentlyInfected"]*pow(2,periodType($data));
 
   $impact["severeCasesByRequestedTime"]=$impact["infectionsByRequestedTime"]*0.15;
