@@ -25,6 +25,21 @@ function periodType($data)
 }
 }
 
+function periodDay($data)
+{
+  switch ($data["periodType"]) {
+    case "days":
+        return $data["timeToElapse"];
+    break;
+    case "weeks":
+        return $data["timeToElapse"]*7;
+    break;
+    case "months":
+        return $data["timeToElapse"]*30;
+    break;
+}
+}
+
 function covid19ImpactEstimator($data)
 {
 
@@ -49,15 +64,15 @@ $factor2=50;
   $impact["casesForVentilatorsByRequestedTime"]=intval($impact["infectionsByRequestedTime"]*0.02);
   $severeImpact["casesForVentilatorsByRequestedTime"]=intval($severeImpact["infectionsByRequestedTime"]*0.02);
 
-  $impact["dollarsInFlight"]=$impact["infectionsByRequestedTime"]*0.65*1.5*30;
-  $severeImpact["dollarsInFlight"]=($severeImpact["infectionsByRequestedTime"]*0.65*1.5*30);
+  $impact["dollarsInFlight"]=$impact["infectionsByRequestedTime"]*$data["region"]["avgDailyIncomePopulation"]*$data["region"]["avgDailyIncomeInUSD"]*periodDay($data);
+  $severeImpact["dollarsInFlight"]=($severeImpact["infectionsByRequestedTime"]*$data["region"]["avgDailyIncomePopulation"]*$data["region"]["avgDailyIncomeInUSD"]*periodDay($data));
 
   $output= array("data"=>$data,"impact"=>$impact,"severeImpact"=>$severeImpact);
  
   
 
 
-  // die(var_dump($output,periodType($data)));
+  // die(var_dump($output,periodDay($data)));
    return $output;
  
 
