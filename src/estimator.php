@@ -64,8 +64,8 @@ $factor2=50;
   $impact["casesForVentilatorsByRequestedTime"]=intval($impact["infectionsByRequestedTime"]*0.02);
   $severeImpact["casesForVentilatorsByRequestedTime"]=intval($severeImpact["infectionsByRequestedTime"]*0.02);
 
-  $impact["dollarsInFlight"]=intval(($impact["infectionsByRequestedTime"]*$data["region"]["avgDailyIncomePopulation"]*$data["region"]["avgDailyIncomeInUSD"])*periodDay($data));
-  $severeImpact["dollarsInFlight"]=intval(($severeImpact["infectionsByRequestedTime"]*$data["region"]["avgDailyIncomePopulation"]*$data["region"]["avgDailyIncomeInUSD"])*periodDay($data));
+  $impact["dollarsInFlight"]=intval(($impact["infectionsByRequestedTime"]*$data["region"]["avgDailyIncomePopulation"]*$data["region"]["avgDailyIncomeInUSD"])/periodDay($data));
+  $severeImpact["dollarsInFlight"]=intval(($severeImpact["infectionsByRequestedTime"]*$data["region"]["avgDailyIncomePopulation"]*$data["region"]["avgDailyIncomeInUSD"])/periodDay($data));
 
   $output= array("data"=>$data,"impact"=>$impact,"severeImpact"=>$severeImpact);
  
