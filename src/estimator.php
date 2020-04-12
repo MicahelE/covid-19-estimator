@@ -45,7 +45,7 @@ $factor2=50;
   $impact["hospitalBedsByRequestedTime"]=intval(($data["totalHospitalBeds"]*0.35)-$impact["severeCasesByRequestedTime"]);
   $severeImpact["hospitalBedsByRequestedTime"]=intval(($data["totalHospitalBeds"]*0.35)-$severeImpact["severeCasesByRequestedTime"]);
   $impact["casesForICUByRequestedTime"]=$impact["infectionsByRequestedTime"]*0.05;
-  $severeImpact["casesForICUByRequestedTime"]=$impact["infectionsByRequestedTime"]*0.05;
+  $severeImpact["casesForICUByRequestedTime"]=$severeImpact["infectionsByRequestedTime"]*0.05;
   $impact["casesForVentilatorsByRequestedTime"]=intval($impact["infectionsByRequestedTime"]*0.02);
   $severeImpact["casesForVentilatorsByRequestedTime"]=intval($impact["infectionsByRequestedTime"]*0.02);
 
