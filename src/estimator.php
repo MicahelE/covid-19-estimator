@@ -9,6 +9,7 @@ $data= array( "region"=> array("name"=>"Africa", "avgAge"=>19.7, "avgDailyIncome
 "totalHospitalBeds"=> 1380614);
 
 
+
 function periodType($data)
 {
   switch ($data["periodType"]) {
@@ -26,9 +27,13 @@ function periodType($data)
 
 function covid19ImpactEstimator($data)
 {
-  $impact["currentlyInfected"]=$data["reportedCases"]*10;
 
-  $severeImpact["currentlyInfected"]=$data["reportedCases"]*50;
+  $factor1=10;
+
+$factor2=50;
+  $impact["currentlyInfected"]=$data["reportedCases"]*$factor1;
+
+  $severeImpact["currentlyInfected"]=$data["reportedCases"]*$factor2;
 
   $impact["infectionsByRequestedTime"]=$impact["currentlyInfected"] * (pow(2,periodType($data)));
   ;
@@ -52,7 +57,7 @@ function covid19ImpactEstimator($data)
   
 
 
-  // die(var_dump($output));
+  // die(var_dump($output,periodType($data)));
   return $output;
  
 
